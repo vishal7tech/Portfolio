@@ -103,7 +103,7 @@ const Hero = () => {
           <div className="absolute -inset-4 bg-gradient-to-tr from-primary/30 to-blue-400/30 rounded-full blur-2xl animate-pulse" />
           <div className="relative w-full h-full rounded-full border-4 border-border/50 overflow-hidden shadow-2xl glass-card">
             <Avatar className="w-full h-full">
-              <AvatarImage src="https://miaoda-site-img.s3cdn.medo.dev/images/KLing_d1a65c9e-562d-42e1-a3e6-5d072db260ab.jpg" className="object-cover" />
+              <AvatarImage src="/formal.jpg" className="object-cover" />
               <AvatarFallback className="text-6xl font-bold bg-secondary text-primary">VC</AvatarFallback>
             </Avatar>
           </div>
