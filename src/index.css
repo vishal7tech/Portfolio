@@ -45,13 +45,13 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 220 15% 8%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
+    --primary: 188 100% 42%;
     --primary-foreground: 222.2 47.4% 11.2%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -62,21 +62,24 @@ All colors MUST be HSL.
     --destructive: 0 62.8% 30.6%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-    --chart-1: 220 70% 50%;
+    --ring: 188 100% 42%;
+    --chart-1: 188 100% 42%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 188 100% 42%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 188 100% 42%;
     --destructive-foreground: 210 40% 98%;
+    --neon-cyan: 188 100% 42%;
+    --neon-blue: 217 100% 50%;
+    --neon-purple: 271 100% 60%;
   }
 }
 
@@ -100,12 +103,42 @@ All colors MUST be HSL.
     @apply bg-card/40 backdrop-blur-sm border border-border/50 hover:border-primary/50 transition-all duration-300;
   }
 
+  .glass-premium {
+    @apply bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl border border-white/10 shadow-2xl;
+  }
+
+  .neon-glow {
+    box-shadow: 0 0 20px hsl(var(--neon-cyan) / 0.5), 0 0 40px hsl(var(--neon-cyan) / 0.3);
+  }
+
+  .neon-border {
+    border: 1px solid hsl(var(--neon-cyan) / 0.6);
+    box-shadow: 0 0 15px hsl(var(--neon-cyan) / 0.3), inset 0 0 15px hsl(var(--neon-cyan) / 0.1);
+  }
+
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600;
   }
   
   .gradient-bg {
-    @apply bg-gradient-to-br from-primary/10 via-background to-secondary/10;
+    @apply bg-gradient-to-br from-cyan-500/10 via-background to-purple-500/10;
+  }
+
+  .gradient-neon {
+    background: linear-gradient(135deg, hsl(var(--neon-cyan) / 0.3), hsl(var(--neon-blue) / 0.2), hsl(var(--neon-purple) / 0.1));
+  }
+
+  .text-neon {
+    color: hsl(var(--neon-cyan));
+    text-shadow: 0 0 10px hsl(var(--neon-cyan) / 0.8);
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:transform hover:-translate-y-2 hover:scale-105;
+  }
+
+  .smooth-scroll {
+    scroll-behavior: smooth;
   }
 }
 
@@ -117,4 +150,58 @@ All colors MUST be HSL.
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px hsl(var(--neon-cyan) / 0.5); }
+  50% { box-shadow: 0 0 40px hsl(var(--neon-cyan) / 0.8); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: hsl(var(--neon-cyan) / 0.6); }
+  50% { border-color: hsl(var(--neon-cyan) / 1); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.animate-border-glow {
+  animation: border-glow 2s ease-in-out infinite;
+}
+
+body {
+  background: radial-gradient(ellipse at top, hsl(var(--neon-cyan) / 0.1) 0%, transparent 50%),
+              radial-gradient(ellipse at bottom, hsl(var(--neon-purple) / 0.1) 0%, transparent 50%),
+              hsl(var(--background));
+  min-height: 100vh;
+}
+
+.neon-bg {
+  background: linear-gradient(135deg, 
+    hsl(var(--background)) 0%,
+    hsl(var(--neon-cyan) / 0.05) 25%,
+    hsl(var(--neon-blue) / 0.05) 50%,
+    hsl(var(--neon-purple) / 0.05) 75%,
+    hsl(var(--background)) 100%);
 }

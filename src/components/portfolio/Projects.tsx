@@ -48,110 +48,171 @@ const Projects = () => {
     : projects.filter(p => p.category === activeCategory);
 
   return (
-    <div className="space-y-16">
-      <div className="flex flex-col items-center text-center space-y-4 max-w-2xl mx-auto">
+    <div className="space-y-16 relative">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          className="absolute top-1/3 right-1/4 w-72 h-72 bg-neon-cyan/10 rounded-full blur-3xl animate-float"
+          style={{ animationDelay: '0s' }}
+        />
+        <motion.div 
+          className="absolute bottom-1/3 left-1/4 w-56 h-56 bg-neon-purple/10 rounded-full blur-2xl animate-float"
+          style={{ animationDelay: '2s' }}
+        />
+      </div>
+
+      <div className="flex flex-col items-center text-center space-y-6 max-w-3xl mx-auto relative z-10">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-bold"
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-6xl font-bold"
         >
-          Featured <span className="gradient-text">Projects</span>
+          Featured <span className="gradient-text animate-gradient">Projects</span>
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-muted-foreground"
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="text-muted-foreground text-lg leading-relaxed"
         >
           Check out some of my best work, ranging from software systems to mobile applications.
         </motion.p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-4">
-        {categories.map((cat) => (
-          <Button
+      <div className="flex flex-wrap justify-center gap-4 relative z-10">
+        {categories.map((cat, index) => (
+          <motion.div
             key={cat}
-            variant={activeCategory === cat ? "default" : "outline"}
-            onClick={() => setActiveCategory(cat)}
-            className="rounded-full px-6 transition-all"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            {cat}
-          </Button>
+            <Button
+              variant={activeCategory === cat ? "default" : "outline"}
+              onClick={() => setActiveCategory(cat)}
+              className={`rounded-full px-8 py-3 transition-all duration-300 font-medium ${
+                activeCategory === cat 
+                  ? "glass-premium neon-border text-neon-cyan hover:bg-neon-cyan/10" 
+                  : "glass-premium border-neon-cyan/30 hover:border-neon-cyan hover:text-neon-cyan hover:bg-neon-cyan/10"
+              }`}
+            >
+              {cat}
+            </Button>
+          </motion.div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
         <AnimatePresence mode="popLayout">
           {filteredProjects.map((project, idx) => (
             <motion.div
               key={project.id}
               layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4, delay: idx * 0.1 }}
+              initial={{ opacity: 0, scale: 0.9, y: 50 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: -50 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              whileHover={{ y: -10 }}
             >
-              <Card className="h-full glass-card overflow-hidden group border-border/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500">
-                <div className="relative h-48 overflow-hidden">
+              <Card className="h-full glass-premium neon-border hover:border-neon-cyan/60 transition-all duration-500 group overflow-hidden">
+                <div className="relative h-56 overflow-hidden">
                   <img
                     src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-4">
-                    <Button asChild size="icon" variant="secondary" className="rounded-full">
-                      <a href={project.github} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-5 w-5" />
-                      </a>
-                    </Button>
-                    {project.demo !== "#" && (
-                      <Button asChild size="icon" variant="default" className="rounded-full">
-                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-5 w-5" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-4">
+                    <motion.div
+                      initial={{ scale: 0, rotate: -180 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <Button asChild size="icon" variant="secondary" className="rounded-full glass-premium neon-border hover:bg-neon-cyan/10">
+                        <a href={project.github} target="_blank" rel="noopener noreferrer">
+                          <Github className="h-5 w-5" />
                         </a>
                       </Button>
+                    </motion.div>
+                    {project.demo !== "#" && (
+                      <motion.div
+                        initial={{ scale: 0, rotate: 180 }}
+                        whileInView={{ scale: 1, rotate: 0 }}
+                        whileHover={{ scale: 1.2, rotate: -360 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <Button asChild size="icon" variant="default" className="rounded-full glass-premium neon-border text-neon-cyan hover:bg-neon-cyan/10">
+                          <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-5 w-5" />
+                          </a>
+                        </Button>
+                      </motion.div>
                     )}
                   </div>
                 </div>
 
-                <CardHeader className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <Badge variant="outline" className="text-[10px] uppercase tracking-wider text-primary border-primary/20">
-                      {project.category}
-                    </Badge>
+                <CardHeader className="p-6 space-y-4">
+                  <div className="flex justify-between items-start">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Badge variant="outline" className="text-xs uppercase tracking-wider text-neon-cyan border-neon-cyan/30 glass-premium">
+                        {project.category}
+                      </Badge>
+                    </motion.div>
                   </div>
-                  <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
+                  <CardTitle className="text-2xl font-bold group-hover:text-neon-cyan transition-colors duration-300">
                     {project.title}
                   </CardTitle>
                 </CardHeader>
 
-                <CardContent className="px-6 pb-2">
-                  <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
+                <CardContent className="px-6 pb-4">
+                  <p className="text-muted-foreground leading-relaxed line-clamp-3">
                     {project.description}
                   </p>
                 </CardContent>
 
-                <CardFooter className="px-6 pb-6 pt-4 flex flex-col items-start gap-4 mt-auto">
+                <CardFooter className="px-6 pb-6 pt-2 flex flex-col items-start gap-6 mt-auto">
                   <div className="flex flex-wrap gap-2">
-                    {project.tech.map((t) => (
-                      <span key={t} className="text-[11px] font-medium bg-secondary px-2 py-0.5 rounded text-muted-foreground">
-                        {t}
-                      </span>
+                    {project.tech.map((t, techIdx) => (
+                      <motion.div
+                        key={t}
+                        initial={{ opacity: 0, scale: 0 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: idx * 0.1 + techIdx * 0.05 }}
+                        whileHover={{ scale: 1.1, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <span className="text-xs font-medium glass-premium border border-neon-cyan/20 px-3 py-1 rounded-full text-neon-cyan hover:border-neon-cyan/60 hover:bg-neon-cyan/10 transition-all">
+                          {t}
+                        </span>
+                      </motion.div>
                     ))}
                   </div>
                   
-                  <div className="flex w-full justify-between items-center pt-2">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-bold text-primary flex items-center group-hover:translate-x-1 transition-transform"
+                  <motion.a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-bold text-neon-cyan flex items-center group hover:translate-x-2 transition-all duration-300"
+                    whileHover={{ x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    View Project 
+                    <motion.div
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
                     >
-                      View Project <ArrowRight className="ml-2 h-4 w-4" />
-                    </a>
-                  </div>
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </motion.div>
+                  </motion.a>
                 </CardFooter>
               </Card>
             </motion.div>
