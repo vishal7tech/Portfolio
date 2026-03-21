@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
-import { Github, Linkedin, Mail, Download, MessageSquare } from 'lucide-react';
+import { Github, Linkedin, Mail, Download, MessageSquare, Instagram } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const roles = ["Software Developer", "Full Stack Developer", "Android Developer", "Problem Solver"];
@@ -109,7 +109,7 @@ const Hero = () => {
             whileTap={{ scale: 0.95 }}
           >
             <Button asChild variant="outline" size="lg" className="rounded-full px-8 glass-premium border-neon-cyan/50 hover:border-neon-cyan hover:bg-neon-cyan/10 hover:text-neon-cyan hover-lift">
-              <a href="/resume.pdf" download="Vishal_Chaudhari_Resume">
+              <a href="/Vishal_Chaudhari_Resume.pdf" download="Vishal_Chaudhari_Resume">
                 Download CV <Download className="ml-2 h-4 w-4" />
               </a>
             </Button>
@@ -125,6 +125,7 @@ const Hero = () => {
           {[
             { href: "https://github.com/vishal7tech", icon: Github },
             { href: "https://linkedin.com/in/vishal-chaudhari-vishal7tech", icon: Linkedin },
+            { href: "https://instagram.com/vishal_chaudhari_74", icon: Instagram },
             { href: "mailto:vishal7.tech@gmail.com", icon: Mail }
           ].map((social, index) => (
             <motion.a
@@ -185,9 +186,9 @@ const Hero = () => {
           <motion.div
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute -bottom-6 -right-6 glass-premium p-4 rounded-2xl shadow-xl neon-border flex items-center space-x-2"
+            className="absolute -bottom-6 -right-0 glass-premium p-4 rounded-2xl shadow-xl neon-border flex items-center space-x-2"
           >
-            <span className="text-sm font-medium text-neon-cyan">B.Tech Student @ GHRU</span>
+            <span className="text-sm font-medium text-neon-cyan">B.Tech Student</span>
           </motion.div>
 
           {/* Additional floating elements */}

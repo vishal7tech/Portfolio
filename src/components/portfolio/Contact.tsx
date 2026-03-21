@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Github, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, Github, Linkedin, Instagram } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { initializeEmailJS, sendEmail, getEmailConfigStatus } from '@/services/emailjs';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -26,6 +27,7 @@ const formSchema = z.object({
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isEmailJSConfigured, setIsEmailJSConfigured] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,18 +38,52 @@ const Contact = () => {
     },
   });
 
+  useEffect(() => {
+    // Initialize EmailJS and check configuration
+    const configStatus = getEmailConfigStatus();
+    if (configStatus.isConfigured) {
+      const initialized = initializeEmailJS();
+      setIsEmailJSConfigured(initialized);
+      
+      if (!initialized) {
+        toast.error('EmailJS configuration error. Please check environment variables.');
+      }
+    } else {
+      console.error('EmailJS not properly configured:', configStatus);
+      toast.error('EmailJS not configured. Please check environment variables.');
+    }
+  }, []);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!isEmailJSConfigured) {
+      toast.error('Email service is not configured. Please contact the administrator.');
+      return;
+    }
+
     setIsSubmitting(true);
-    // Simulate API call
-    console.log("Form values:", values);
-    await new Promise(resolve => setTimeout(resolve, 2000));
     
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    toast.success("Message sent successfully!");
-    form.reset();
-    
-    setTimeout(() => setIsSuccess(false), 5000);
+    try {
+      const result = await sendEmail({
+        name: values.name,
+        email: values.email,
+        message: values.message
+      });
+
+      if (result.success) {
+        setIsSuccess(true);
+        toast.success('Message sent successfully! I will get back to you soon.');
+        form.reset();
+        
+        setTimeout(() => setIsSuccess(false), 5000);
+      } else {
+        toast.error(result.message || 'Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast.error('An unexpected error occurred. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -151,6 +187,14 @@ const Contact = () => {
                   <div>
                     <p className="text-sm font-bold uppercase tracking-widest text-neon-cyan mb-2">{item.label}</p>
                     <p className="text-lg font-medium">{item.value}</p>
+                    {item.label === "Email" && (
+                      <div className="flex items-center space-x-2 mt-2">
+                        <a href="mailto:vishal7.tech@gmail.com" className="text-neon-cyan hover:text-neon-blue transition-colors">
+                          <Mail className="h-4 w-4" />
+                        </a>
+                        <span className="text-sm text-muted-foreground">Click to email</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -166,7 +210,8 @@ const Contact = () => {
           >
             {[
               { href: "https://github.com/vishal7tech", icon: Github },
-              { href: "https://linkedin.com/in/vishal-chaudhari-vishal7tech", icon: Linkedin }
+              { href: "https://linkedin.com/in/vishal-chaudhari-vishal7tech", icon: Linkedin },
+              { href: "https://instagram.com/vishal_chaudhari_74", icon: Instagram }
             ].map((social, index) => (
               <motion.a
                 key={social.href}

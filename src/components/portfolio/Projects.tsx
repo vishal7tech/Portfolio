@@ -35,6 +35,56 @@ const projects = [
     github: "https://github.com/vishal7tech/Expense-Tracker",
     demo: "https://vishal7tech.github.io/Expense-Tracker/",
     category: "Web"
+  },
+  {
+    id: 4,
+    title: "FuelBook",
+    description: "Offline-first Android fuel station management app with Room and Repository architecture. Captures nozzle readings, cash denominations, UPI collections, and daily reconciliation with automated summaries and PDF export.",
+    tech: ["Kotlin", "Android SDK", "Room", "SQLite", "Coroutines", "Material Design 3"],
+    image: "/images/projects/FuelBook.jpg",
+    github: "#",
+    demo: "#",
+    category: "Mobile"
+  },
+  {
+    id: 5,
+    title: "Train Timer",
+    description: "Android trip-logging system with coroutine-based background timer services, persistent lap tracking, and route-aware event capture. Features configurable route management and PDF report export.",
+    tech: ["Kotlin", "Android SDK", "Coroutines", "LiveData", "RecyclerView", "Gson"],
+    image: "/images/projects/TrainTimer.png",
+    github: "#",
+    demo: "#",
+    category: "Mobile"
+  },
+  {
+    id: 6,
+    title: "WorkSphere",
+    description: "Role-based HRMS platform with admin and employee portals for task assignment, attendance tracking, leave approvals, document management, and internal messaging with skill-based task matching.",
+    tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "React Query", "Recharts"],
+    image: "/images/projects/Worksphere.png",
+    github: "#",
+    demo: "#",
+    category: "Web"
+  },
+  {
+    id: 7,
+    title: "AI Chatbot",
+    description: "Intelligent chatbot platform using Flask, MySQL, and TensorFlow with TF-IDF intent classification, multilingual preprocessing, and admin-driven training pipeline for continuous improvement.",
+    tech: ["Python", "Flask", "TensorFlow", "Scikit-learn", "NLTK", "MySQL", "REST APIs"],
+    image: "/images/projects/AIChatbot.png",
+    github: "#",
+    demo: "#",
+    category: "Web"
+  },
+  {
+    id: 8,
+    title: "Hospital Management System",
+    description: "Full-stack hospital management platform with JWT-based RBAC, role-specific dashboards, conflict-aware appointment scheduling, real-time WebSocket notifications, and automated PDF invoice generation.",
+    tech: ["Java 17", "Spring Boot", "Spring Security", "MySQL", "React", "TypeScript", "WebSocket"],
+    image: "/images/projects/HMS.png",
+    github: "#",
+    demo: "#",
+    category: "Web"
   }
 ];
 

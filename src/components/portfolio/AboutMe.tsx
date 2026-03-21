@@ -188,32 +188,6 @@ const AboutMe = () => {
                 </div>
               </div>
             </motion.div>
-          </div>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.7 }}
-            whileHover={{ y: -5 }}
-            className="p-8 glass-premium neon-border rounded-3xl gradient-neon"
-          >
-            <h4 className="font-bold mb-4 flex items-center text-2xl">
-              <motion.div 
-                className="p-3 glass-premium neon-border rounded-2xl mr-4 neon-glow"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Rocket className="h-8 w-8 text-neon-cyan" />
-              </motion.div>
-              <span className="gradient-text">Career Goal</span>
-            </h4>
-            <motion.p 
-              className="text-muted-foreground leading-relaxed text-lg"
-            >
-              To leverage my skills in a forward-thinking organization where I can contribute to building cutting-edge 
-              technology while mastering modern development stacks and creating impactful solutions.
-            </motion.p>
           </motion.div>
         </motion.div>
       </div>
