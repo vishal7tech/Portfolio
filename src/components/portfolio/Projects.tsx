@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Github, ExternalLink, ArrowRight, Smartphone, Code2, Layers } from 'lucide-react';
+import { Github, ExternalLink, ArrowRight, Smartphone, Code2, Layers, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,6 +14,7 @@ const projects = [
     image: "https://miaoda-site-img.s3cdn.medo.dev/images/KLing_315c8e2d-c6e4-44d4-b017-28d54e1e2662.jpg",
     github: "https://github.com/vishal7tech/ATM-Machine-System",
     demo: "#",
+    documentation: "#",
     category: "Software"
   },
   {
@@ -24,6 +25,7 @@ const projects = [
     image: "https://miaoda-site-img.s3cdn.medo.dev/images/KLing_46d503cb-c898-4870-9c55-64650651dba9.jpg",
     github: "https://github.com/vishal7tech/Sanraksha-SOS",
     demo: "#",
+    documentation: "#",
     category: "Mobile"
   },
   {
@@ -34,6 +36,7 @@ const projects = [
     image: "https://miaoda-site-img.s3cdn.medo.dev/images/KLing_292098c0-0c71-44a7-99d5-697e59489aa8.jpg",
     github: "https://github.com/vishal7tech/Expense-Tracker",
     demo: "https://vishal7tech.github.io/Expense-Tracker/",
+    documentation: "#",
     category: "Web"
   },
   {
@@ -44,6 +47,7 @@ const projects = [
     image: "/images/projects/FuelBook.jpg",
     github: "#",
     demo: "#",
+    documentation: "#",
     category: "Mobile"
   },
   {
@@ -54,6 +58,7 @@ const projects = [
     image: "/images/projects/TrainTimer.png",
     github: "#",
     demo: "#",
+    documentation: "#",
     category: "Mobile"
   },
   {
@@ -64,6 +69,7 @@ const projects = [
     image: "/images/projects/Worksphere.png",
     github: "#",
     demo: "#",
+    documentation: "#",
     category: "Web"
   },
   {
@@ -74,6 +80,7 @@ const projects = [
     image: "/images/projects/AIChatbot.png",
     github: "#",
     demo: "#",
+    documentation: "#",
     category: "Web"
   },
   {
@@ -84,6 +91,7 @@ const projects = [
     image: "/images/projects/HMS.png",
     github: "#",
     demo: "#",
+    documentation: "#",
     category: "Web"
   }
 ];
@@ -190,6 +198,18 @@ const Projects = () => {
                         </a>
                       </Button>
                     </motion.div>
+                    <motion.div
+                      initial={{ scale: 0, rotate: -180 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
+                    >
+                      <Button asChild size="icon" variant="secondary" className="rounded-full glass-premium neon-border hover:bg-neon-cyan/10">
+                        <a href={project.documentation} target="_blank" rel="noopener noreferrer">
+                          <BookOpen className="h-5 w-5" />
+                        </a>
+                      </Button>
+                    </motion.div>
                     {project.demo !== "#" && (
                       <motion.div
                         initial={{ scale: 0, rotate: 180 }}
@@ -261,6 +281,22 @@ const Projects = () => {
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
                     >
                       <ArrowRight className="ml-2 h-4 w-4" />
+                    </motion.div>
+                  </motion.a>
+                  <motion.a
+                    href={project.documentation}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-bold text-neon-cyan flex items-center group hover:translate-x-2 transition-all duration-300"
+                    whileHover={{ x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Documentation 
+                    <motion.div
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                    >
+                      <BookOpen className="ml-2 h-4 w-4" />
                     </motion.div>
                   </motion.a>
                 </CardFooter>
